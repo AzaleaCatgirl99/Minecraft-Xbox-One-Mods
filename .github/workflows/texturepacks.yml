@@ -22,7 +22,6 @@ jobs:
 
       - name: Create Texture Pack Bundle
         run: |
-            cp ./LICENSE ./Texture-Packs/
             cp ./README.md ./Texture-Packs/
 
       - name: Upload Texture Pack Bundle to artifact
