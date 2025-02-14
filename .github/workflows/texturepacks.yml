@@ -1,0 +1,32 @@
+name: Texture Pack Builds
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build-resources-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create short commit SHA
+        id: vars
+        run: |
+            shortSha=$(git rev-parse --short ${{ github.sha }})
+            echo "COMMIT_SHORT_SHA=$shortSha" >> $GITHUB_ENV
+
+      - name: Create Texture Pack Bundle
+        run: |
+            cp ./LICENSE ./Texture-Packs/
+            cp ./README.md ./Texture-Packs/
+
+      - name: Upload Texture Pack Bundle to artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Permdog99s-MC-Xbox-One-Texture-Packs-${{ env.COMMIT_SHORT_SHA }}"
+          path: Texture-Packs
